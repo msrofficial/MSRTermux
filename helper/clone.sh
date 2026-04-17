@@ -5,7 +5,6 @@ REPOSITORY_LINKS=(
   https://github.com/zsh-users/zsh-syntax-highlighting
   https://github.com/zsh-users/zsh-autosuggestions
   https://github.com/joshskidmore/zsh-fzf-history-search
-  https://github.com/marlonrichert/zsh-autocomplete
   https://github.com/jimeh/tmux-themepack
 )
 
@@ -14,7 +13,6 @@ REPOSITORY_APIS=(
   repos/zsh-users/zsh-syntax-highlighting
   repos/zsh-users/zsh-autosuggestions
   repos/joshskidmore/zsh-fzf-history-search
-  repos/marlonrichert/zsh-autocomplete
   repos/jimeh/tmux-themepack
 )
 
@@ -23,7 +21,6 @@ REPOSITORY_FULL_NAME=(
   zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-autosuggestions
   joshskidmore/zsh-fzf-history-search
-  marlonrichert/zsh-autocomplete
   jimeh/tmux-themepack
 )
 

@@ -45,7 +45,7 @@ function listZshTheme() {
     THEME_USED="powerlevel10k"
   fi
 
-  for ZSHTHEME in ${ZSH_CUSTOM_THEME_DIR}/*; do
+  for ZSHTHEME in ${ZSH_CUSTOM_THEME_DIR}/*.zsh-theme; do
 
     ZSHTHEME_FILE_NAME[INDEX_LOOP]=$( echo ${ZSHTHEME} | awk -F'/' '{print $NF}')
     ZSHTHEME_LIST_NAME[INDEX_LOOP]=$( echo ${ZSHTHEME} | awk -F'/' '{print $NF}' | sed "s/.zsh-theme//g")
@@ -118,7 +118,7 @@ function selectZshTheme() {
 
         echo ""
 
-        exec $(which zsh)
+        exec $(command -v zsh)
 
         #stat "INFO" "Success" "Please run '${COLOR_SUCCESS}refresh${COLOR_BASED}' or '${COLOR_SUCCESS}source ~/.zshrc${COLOR_BASED}' to apply theme!\n"
 
