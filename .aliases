@@ -1,0 +1,80 @@
+# fzf preview
+alias preview="fzf --preview='bat --color=always --style=numbers --theme OneHalfDark {}' --preview-window=down"
+
+# Change ZSH Theme
+alias chzsh="~/.scripts/zsh/changetheme.sh"
+
+# System shortcuts
+alias q="exit"
+alias c="clear"
+alias sd="cd /sdcard"
+alias pf="cd $PREFIX"
+
+# Package Manager
+alias pacupg="pkg upgrade"
+alias pacupd="pkg update"
+alias pacupgupd="pkg update && pkg upgrade"
+
+# Ping
+alias pg="ping google.com"
+
+# File listing
+alias ls="eza --icons"
+alias la="eza --icons -lgha --group-directories-first"
+alias lt="eza --icons --tree"
+alias lta="eza --icons --tree -lgha"
+alias bat="bat --theme OneHalfDark"
+alias cat="bat --theme OneHalfDark -p $@"
+
+# Largest Files
+alias largefile="du -h -x -s -- * | sort -r -h | head -20"
+
+# Navigate common sdcard folders
+alias ss="cd /sdcard/Pictures/Screenshots/"
+alias ms="cd /sdcard/Movies"
+alias dl="cd /sdcard/Download"
+alias ds="cd /sdcard/Documents"
+
+# Archives apt cache
+alias archives="cd /data/data/com.termux/cache/apt/archives/"
+
+# proot-distro
+alias prot="cd $PREFIX/var/lib/proot-distro"
+alias protlogin="proot-distro login $1"
+
+# ImageMagick
+alias listfont="magick convert -list font | grep -iE 'font:.*'"
+
+# Screenshot
+alias awesomeconf="nvim ~/.config/awesomeshot/awesomeshot.conf"
+
+# Git shortcuts
+alias gitgraph="git log --all --decorate --oneline --graph"
+alias gitupdate="git fetch && git pull"
+alias gitstat="git status"
+alias gitad="git add $@"
+alias gitcom="git commit -m '$@'"
+
+# Config editing
+alias zshconf="nvim ~/.zshrc"
+alias termconf="nvim ~/.termux/termux.properties"
+alias aliasconf="nvim ~/.aliases"
+alias startconf="nvim ~/.autostart"
+alias nviminit="nvim ~/.config/nvim/init.lua"
+alias nvimtheme="nvim ~/.config/nvim/lua/chadrc.lua"
+alias schemeconf="nvim ~/.scripts/colorscheme/colors.sh"
+alias zshthemeconf="nvim ~/.scripts/zsh/changetheme.sh"
+
+# Termux
+alias reload="termux-reload-settings"
+alias termper="termux-setup-storage"
+alias refresh="source $HOME/.zshrc"
+alias unsource="exec $SHELL -l"
+
+# Termux:API
+alias scan="termux-media-scan"
+alias open="termux-open"
+
+# Web Server (Require LAMP - https://github.com/xshin404/lampTermux)
+alias apaconf="nvim $PREFIX/etc/apache2/httpd.conf"
+alias phpmyadminconf="nvim $PREFIX/etc/phpmyadmin/config.inc.php"

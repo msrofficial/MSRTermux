@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export COLUMNS LINES
+
+# Cursor underline style
+echo -e "\e[4 q"
