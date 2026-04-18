@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+
+# ─────────────────────────────────────────
+#  msrtermux — MSRTermux CLI Tool
+#  Usage: msrtermux [command]
+# ─────────────────────────────────────────
+
+COLOR_BASED="\e[39m"
+COLOR_DANGER="\e[91m"
+COLOR_WARNING="\e[93m"
+COLOR_SUCCESS="\e[92m"
+
+MSRTERMUX_VERSION="2.2.0"
+
+function banner() {
+  echo -e "
+\e[92m  __  __ _____ ____  _____                              
+\e[93m |  \/  / ____|  _ \|_   _|__ _ __ _ __ ___  _   ___  __
+\e[92m | |\/| \__ \| |_) | | |/ _ \ '__| '_ \` _ \| | | \ \/ /
+\e[93m | |  | |___) |  _ <  | |  __/ |  | | | | | | |_| |>  < 
+\e[92m |_|  |_|____/|_| \_\ |_|\___|_|  |_| |_| |_|\__,_/_/\_\\
+${COLOR_BASED}  v${MSRTERMUX_VERSION}
+"
+}
+
+function showHelp() {
+  echo -e "Usage: ${COLOR_SUCCESS}msrtermux${COLOR_BASED} [command]\n"
+  echo -e "Commands:"
+  echo -e "  ${COLOR_WARNING}uninstall${COLOR_BASED}   Remove MSRTermux completely and restore original Termux"
+  echo -e "  ${COLOR_WARNING}help${COLOR_BASED}        Show this help message\n"
+}
+
+case "$1" in
+
+  uninstall )
+    UNINSTALL_SCRIPT="$HOME/.local/bin/../../../uninstall.sh"
+    # Try common locations
+    if [[ -f "$HOME/MSRTermux-v2/uninstall.sh" ]]; then
+      bash "$HOME/MSRTermux-v2/uninstall.sh"
+    elif [[ -f "$HOME/MSRTermux/uninstall.sh" ]]; then
+      bash "$HOME/MSRTermux/uninstall.sh"
+    elif [[ -f "$(dirname $0)/../../uninstall.sh" ]]; then
+      bash "$(dirname $0)/../../uninstall.sh"
+    else
+      # Run uninstall inline
+      bash <(cat <<'UNINSTALL_EOF'
+#!/usr/bin/env bash
+
+COLOR_BASED="\e[39m"
+COLOR_DANGER="\e[91m"
+COLOR_WARNING="\e[93m"
+COLOR_SUCCESS="\e[92m"
+
+PACKAGES=(
+  bat curl clang eza fzf
+  neovim openssh
+  termux-api tmux zsh
+)
+
+DOTFILES=(
+  .autostart .aliases
+  .config/lf .config/mytermux
+  .colorscheme .fonts
+  .local/bin/gitssh .local/bin/ipconfig
+  .local/bin/macfinder .local/bin/macfinder.php
+  .local/bin/msrtermux
+  .scripts .termux
+  .tmux.conf .tmux-themepack
+  .zshrc .oh-my-zsh
+)
+
+echo -e "\n${COLOR_DANGER}WARNING!${COLOR_BASED} This will remove all MSRTermux files and packages."
+echo -e "Your Termux will return to its original state.\n"
+read -p "$(echo -e "Are you sure? [${COLOR_WARNING}y${COLOR_BASED}/${COLOR_DANGER}N${COLOR_BASED}]: ")" CONFIRM
+if [[ ! "$CONFIRM" =~ ^[yY]$ ]]; then
+  echo -e "\n${COLOR_SUCCESS}Uninstall cancelled.${COLOR_BASED}\n"
+  exit 0
+fi
+
+echo -e "\n📦 Removing dotfiles and scripts...\n"
+for DOTFILE in "${DOTFILES[@]}"; do
+  if [[ -d "$HOME/$DOTFILE" || -f "$HOME/$DOTFILE" ]]; then
+    rm -rf "$HOME/$DOTFILE"
+    echo -e "  [${COLOR_SUCCESS}REMOVED${COLOR_BASED}]  $DOTFILE"
+  fi
+done
+
+echo -e "\n📦 Uninstalling packages...\n"
+for PACKAGE in "${PACKAGES[@]}"; do
+  THIS_PACKAGE=$(pkg list-installed $PACKAGE 2>/dev/null | tail -n 1)
+  CHECK_PACKAGE=${THIS_PACKAGE%/*}
+  if [[ "$CHECK_PACKAGE" == "$PACKAGE" ]]; then
+    pkg uninstall -y $PACKAGE &>/dev/null
+    echo -e "  [${COLOR_SUCCESS}REMOVED${COLOR_BASED}]  $PACKAGE"
+  fi
+done
+
+rm -f "$PREFIX/share/fonts/TTF/Fira Code Bold Nerd Font.ttf" 2>/dev/null
+
+echo -e "\n🔄 Restoring default shell to bash..."
+chsh -s bash
+
+if [[ -f "$HOME/motd/motd.backup" ]]; then
+  mv "$HOME/motd/motd.backup" "$PREFIX/etc/motd"
+  rmdir "$HOME/motd" 2>/dev/null
+fi
+
+echo -e "\n${COLOR_SUCCESS}✓ MSRTermux has been fully uninstalled.${COLOR_BASED}"
+echo -e "  Please restart Termux to complete the process.\n"
+termux-toast -b "#373E4D" -c "#fd6b85" -g middle "MSRTermux uninstalled. Please restart Termux." 2>/dev/null
+UNINSTALL_EOF
+)
+    fi
+  ;;
+
+  help | "" )
+    clear
+    banner
+    showHelp
+  ;;
+
+  * )
+    echo -e "\n${COLOR_DANGER}Unknown command:${COLOR_BASED} $1\n"
+    showHelp
+    exit 1
+  ;;
+
+esac

@@ -72,7 +72,7 @@ All core installer logic, helper scripts, and animation system are derived from 
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/MSRTermux
+git clone https://github.com/msrofficial/MSRTermux
 cd MSRTermux
 bash install.sh
 ```

@@ -42,12 +42,6 @@ alias archives="cd /data/data/com.termux/cache/apt/archives/"
 alias prot="cd $PREFIX/var/lib/proot-distro"
 alias protlogin="proot-distro login $1"
 
-# ImageMagick
-alias listfont="magick convert -list font | grep -iE 'font:.*'"
-
-# Screenshot
-alias awesomeconf="nvim ~/.config/awesomeshot/awesomeshot.conf"
-
 # Git shortcuts
 alias gitgraph="git log --all --decorate --oneline --graph"
 alias gitupdate="git fetch && git pull"

@@ -15,25 +15,18 @@ function zshTheme() {
 
   setCursor off
 
-  echo -e "\n    Getting Information ZSH Theme"
-  sleep 2s
-
-  echo -e "
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    ┃                  Information ZSH Theme                  ┃
-    ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-    ┃      File Name                          File Size       ┃
-    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"
+  echo -e "\n\e[90m  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\e[0m"
+  echo -e "  \e[96mZSH Themes\e[0m"
+  echo -e "\e[90m  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\e[0m\n"
+  printf "  \e[90m%-30s %s\e[0m\n" "Theme" "Size"
+  echo -e "  \e[90m──────────────────────────────────────\e[0m"
 
   for ZSH_CUSTOM_THEME in "${ZSH_CUSTOM_THEMES[@]}"; do
-
-    FILE_SIZE=$(du -s -h .oh-my-zsh/custom/themes/$ZSH_CUSTOM_THEME | awk '{print $1}')
-    printf  "    ┃      ${COLOR_SUCCESS}%-24s${COLOR_BASED}             ${COLOR_WARNING}%5s${COLOR_BASED}         ┃\n" $ZSH_CUSTOM_THEME $FILE_SIZE
-    echo -e "    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"
-
+    FILE_SIZE=$(du -s -h .oh-my-zsh/custom/themes/$ZSH_CUSTOM_THEME 2>/dev/null | awk '{print $1}')
+    printf "  \e[92m%-30s\e[0m \e[93m%s\e[0m\n" "$ZSH_CUSTOM_THEME" "$FILE_SIZE"
   done
 
-  echo ""
+  echo -e "\n\e[90m  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\e[0m\n"
 
 }
 
@@ -41,14 +34,13 @@ function installZshTheme() {
 
   setCursor off
 
-  echo -e "\n    Installing ZSH Custom Themes\n"
+  echo -e "\n  \e[96mInstalling ZSH Themes\e[0m\n"
 
   PATHDIR=".oh-my-zsh/custom/themes"
 
   for ZSH_CUSTOM_THEME in "${ZSH_CUSTOM_THEMES[@]}"; do
 
-    start_animation "       Installing ${COLOR_WARNING}'${COLOR_SUCCESS}${ZSH_CUSTOM_THEME}${COLOR_WARNING}'${COLOR_BASED} ..."
-    sleep 2s
+    start_animation "    \e[90m›\e[0m ${ZSH_CUSTOM_THEME}"
     cp $(pwd)/${PATHDIR}/${ZSH_CUSTOM_THEME} $HOME/${PATHDIR}/${ZSH_CUSTOM_THEME}
 
     if [ -f $HOME/$PATHDIR/$ZSH_CUSTOM_THEME ]; then
@@ -59,6 +51,7 @@ function installZshTheme() {
 
   done
 
+  echo ""
   setCursor on
 
 }

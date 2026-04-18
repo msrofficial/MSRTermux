@@ -4,7 +4,9 @@ function switchCase() {
 
   setCursor on
 
-  read -p "    ${1} ${2}? [Y/n] " SWITCH_CASE
+  echo ""
+  printf "  \e[90m›\e[0m ${1} ${2}? \e[90m[Y/n]\e[0m "
+  read SWITCH_CASE
 
   case "$SWITCH_CASE" in
 
@@ -17,12 +19,12 @@ function switchCase() {
     ;;
 
     n|N )
-      stat "ERROR" "Warning" "${COLOR_DANGER}Abort.${COLOR_BASED}"
+      echo -e "  \e[91m✗\e[0m Aborted.\n"
       exit 1
     ;;
 
     * )
-      stat "ERROR" "Warning" "Unknown '${COLOR_DANGER}${SWITCH_CASE}${COLOR_BASED}'"
+      echo -e "  \e[93m!\e[0m Unknown input '${SWITCH_CASE}'"
       switchCase ${1} ${2} ${3}
     ;;
 
