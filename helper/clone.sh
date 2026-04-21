@@ -40,19 +40,17 @@ function repositories() {
 
   setCursor off
 
-  echo -e "\n\e[90m  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\e[0m"
-  echo -e "  \e[96mRepositories\e[0m"
-  echo -e "\e[90m  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\e[0m\n"
-  printf "  \e[90m%-40s %s\e[0m\n" "Repository" "Size"
-  echo -e "  \e[90m────────────────────────────────────────────────\e[0m"
+  echo -e "\e[90m  ┌─ Repositories\e[0m"
+  printf "  \e[90m│  %-40s %s\e[0m\n" "Repository" "Size"
+  echo -e "\e[90m  │  ────────────────────────────────────────────────\e[0m"
 
   for REPOSITORY_API in "${REPOSITORY_APIS[@]}"; do
-    REPO_NAME=$(curl -s https://api.github.com/${REPOSITORY_API} | grep full_name | sed -n 1p | awk '{print $2}' | sed 's/[",]//g')
+    REPO_NAME=$(curl -s https://api.github.com/${REPOSITORY_API} | grep full_name | sed -n 1p | awk '{print $2}' | sed 's/[\",]//g')
     REPO_SIZE=$(echo "scale=1; $(curl -s https://api.github.com/${REPOSITORY_API} | grep '"size"' | head -1 | tr -dc '[:digit:]') / 1024" | bc 2>/dev/null || echo "—")
-    printf "  \e[92m%-40s\e[0m \e[93m%s MB\e[0m\n" "$REPO_NAME" "$REPO_SIZE"
+    printf "  \e[90m│\e[0m  \e[97m%-40s\e[0m \e[37m%s MB\e[0m\n" "$REPO_NAME" "$REPO_SIZE"
   done
 
-  echo -e "\n\e[90m  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\e[0m\n"
+  echo -e "\e[90m  └──\e[0m\n"
 
 }
 
@@ -60,23 +58,19 @@ function cloneRepository() {
 
   setCursor off
 
-  echo -e "\n  \e[96mCloning Repositories\e[0m\n"
+  echo -e "\e[90m  ┌─ Cloning Repositories\e[0m"
 
   for ((i=0; i<${#REPOSITORY_LINKS[@]}; i++)); do
-
-    start_animation "    \e[90m›\e[0m ${REPOSITORY_FULL_NAME[i]}"
-
+    start_animation "  \e[90m  │\e[0m  ${REPOSITORY_FULL_NAME[i]}"
     git clone ${REPOSITORY_LINKS[i]} ${REPOSITORY_PATH[i]} 2>/dev/null
-
     if [ -d ${REPOSITORY_PATH[i]} ]; then
       stop_animation $? || exit 1
     else
       stop_animation $?
     fi
-
   done
 
-  echo ""
+  echo -e "\e[90m  └──\e[0m\n"
   setCursor on
 
 }

@@ -10,7 +10,7 @@ COLOR_DANGER="\e[91m"
 COLOR_WARNING="\e[93m"
 COLOR_SUCCESS="\e[92m"
 
-MSRTERMUX_VERSION="2.2.0"
+MSRTERMUX_VERSION="2.5.0"
 
 function banner() {
   echo -e "

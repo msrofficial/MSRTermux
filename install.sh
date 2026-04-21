@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 HELPERS=(
-  colors animation banner package switchcase
+  colors animation banner package
   dotfiles clone themes utility
   stat signal screen cursor finish
 )
@@ -18,17 +18,17 @@ function main() {
   banner
 
   packages
-  switchCase "Install" "Packages" installPackages
+  installPackages
 
   dotFiles
   backupDotFiles
-  switchCase "Install" "Dotfiles" installDotFiles
+  installDotFiles
 
   repositories
-  switchCase "Clone" "Repositories" cloneRepository
+  cloneRepository
 
   zshTheme
-  switchCase "Install" "ZSH Themes" installZshTheme
+  installZshTheme
 
   utility
 

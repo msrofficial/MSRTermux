@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
-MSRTERMUX_VERSION="2.2.0"
+MSRTERMUX_VERSION="2.5.0"
 
 function alertFinish() {
 
-  echo -e "\n\e[90m  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\e[0m"
-  echo -e "  \e[92m✓ Installation complete\e[0m"
-  echo -e "\e[90m  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\e[0m"
-  echo -e "  Restart Termux to apply all changes."
-  echo -e "  Run \e[92mmsrtermux help\e[0m to see available commands.\n"
+  echo -e "\e[90m  ┌─ Done\e[0m"
+  echo -e "\e[90m  │\e[0m  \e[92m✓  Installation complete\e[0m"
+  echo -e "\e[90m  │\e[0m"
+  echo -e "\e[90m  │\e[0m  \e[37mRestart Termux to apply all changes.\e[0m"
+  echo -e "\e[90m  │\e[0m  \e[37mRun \e[92mmsrtermux help\e[37m to see available commands.\e[0m"
+  echo -e "\e[90m  └──\e[0m\n"
 
 }
 
